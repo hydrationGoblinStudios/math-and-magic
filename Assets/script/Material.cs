@@ -9,15 +9,11 @@ public class Material : MonoBehaviour
     public CardDisplay card;
     public int cardvalue;
     private bool held;
-    private Vector3 mouseDragStartPosition;
-    private Vector3 spriteDragStartPosition;
 
     private void OnMouseDown()
     {
         cardvalue = card.cardValue;
         held = true;
-        mouseDragStartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        spriteDragStartPosition = transform.localPosition;
     }
     public void OnMouseUp()
     {
@@ -27,13 +23,5 @@ public class Material : MonoBehaviour
         }
         held = false;
         dragEndedCallback(this, card);
-    }
-    private void OnMouseDrag()
-    {
-        if (held)
-        {
-          transform.localPosition = spriteDragStartPosition + Camera.main.ScreenToWorldPoint(Input.mousePosition) - mouseDragStartPosition;
-        }
-    }
-    
+    }  
 }

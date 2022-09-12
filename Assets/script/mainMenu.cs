@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class mainMenu : MonoBehaviour
 {
+    [SerializeField]
+    private FloatSO Value;
   public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -12,5 +14,9 @@ public class mainMenu : MonoBehaviour
     public void QuitButton()
     {
         Application.Quit();
+    }
+    public void update()
+    {
+        Value.Value = 2;
     }
 }

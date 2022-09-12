@@ -12,10 +12,10 @@ public class Slot : MonoBehaviour
     public List<Transform> snapPoints;
     public List<Material> materialObjects;
     public List<Vector2> cardSpawnPoint;
-    string[] equation = new string[3];
+    string[] equation = new string[5];
+    string[] equation2 = new string[3];
     public int result;
-    string x;
-    string y;
+    string x,y,z;
     public int index;
     public TextMeshPro resultText;
     public Transform closestSnapPoint;
@@ -31,25 +31,16 @@ public class Slot : MonoBehaviour
         }
     }
     private void OnDragEnded(Material material, CardDisplay cardDisplay)
-    {
-        float closestDistance = -1;
-        foreach (Transform snapPoint in snapPoints)
-        {
-            float currentDistance = Vector2.Distance(material.transform.localPosition, snapPoint.localPosition);
-            if (closestSnapPoint == null || currentDistance < closestDistance)
-            {
-                closestSnapPoint = snapPoint;
-                closestDistance = currentDistance;
-            }
-        }
+    {        
         //checa se a carta esta no slot certo pra o tipo
-        if (cardDisplay.card.type & snapPoints.IndexOf(closestSnapPoint) == 1 && full == false || !cardDisplay.card.type & snapPoints.IndexOf(closestSnapPoint) != 1 && full == false) 
+        if (cardDisplay.card.type & snapPoints.IndexOf(closestSnapPoint) == 1 && full == false || !cardDisplay.card.type & snapPoints.IndexOf(closestSnapPoint) != 1 && full == false || cardDisplay.card.type & snapPoints.IndexOf(closestSnapPoint) == 3 && full == true|| !cardDisplay.card.type & snapPoints.IndexOf(closestSnapPoint) != 3 && full == true) 
         {
             if (closestSnapPoint != null)
             {
                 material.transform.localPosition = closestSnapPoint.localPosition;
                 slottedCards.Add(material);
                 equation[snapPoints.IndexOf(closestSnapPoint)] = "" + material.cardvalue;
+
                 switch (snapPoints.IndexOf(closestSnapPoint))
                 {
                     case 0:
@@ -59,6 +50,17 @@ public class Slot : MonoBehaviour
                         closestSnapPoint = snapPoints[2];
                         break;
                     case 2:
+                        equation2[0] = equation[0];
+                        equation2[1] = equation2[1];
+                        equation2[2] = equation2[2];
+                        closestSnapPoint = snapPoints[3];
+                        full = true;
+                        break;
+                    case 3:
+                        closestSnapPoint = snapPoints[4];
+                        break;
+                    case 4:
+                        closestSnapPoint = null;
                         full = true;
                         break;
                     default:
@@ -69,31 +71,100 @@ public class Slot : MonoBehaviour
                 {
                     x = equation[0];
                     y = equation[2];
+                    z = equation[4];
                     //faz a equacao baseado nas cartas nos slots
                     switch (equation[1])
                     {
                         case "0":
-                            Debug.Log(int.Parse(x));
-                            result = int.Parse(x) - int.Parse(y);
-                            resultText.SetText($"{result}");
-                            closestSnapPoint = snapPoints[0];
-                            full = false;
-                            Debug.Log(result);
+                            switch (equation[3])
+                            {
+                                case "0":
+                                    Debug.Log(int.Parse(x));
+                                    result = int.Parse(x) - int.Parse(y) - int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                                case "1":
+                                    result = int.Parse(x) - int.Parse(y) + int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                                case "2":
+                                    result = int.Parse(x) - int.Parse(y) * int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                            }
                             break;
                         case "1":
-                            result = int.Parse(x) + int.Parse(y);
-                            resultText.SetText($"{result}");
-                            closestSnapPoint = snapPoints[0];
-                            full = false;
-                            Debug.Log(result);
+                            switch (equation[3])
+                            {
+                                case "0":
+                                    Debug.Log(int.Parse(x));
+                                    result = int.Parse(x) + int.Parse(y) - int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                                case "1":
+                                    result = int.Parse(x) + int.Parse(y) + int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                                case "2":
+                                    result = int.Parse(x) + int.Parse(y) * int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                            }
                             break;
                         case "2":
-                            result = int.Parse(x) * int.Parse(y);
-                            resultText.SetText($"{result}");
-                            closestSnapPoint = snapPoints[0];
-                            full = false;
-                            Debug.Log(result);
+                            switch (equation[3])
+                            {
+                                case "0":
+                                    Debug.Log(int.Parse(x));
+                                    result = int.Parse(x) * int.Parse(y) * int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                                case "1":
+                                    result = int.Parse(x) * int.Parse(y) * int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                                case "2":
+                                    result = int.Parse(x) * int.Parse(y) * int.Parse(z);
+                                    resultText.SetText($"{result}");
+                                    Debug.Log(result);
+                                    break;
+                            }
                             break;
+                    }
+                }
+                foreach (var item in equation2.Where(n => n != null ))
+                {
+                    x = equation[0];
+                    y = equation[2];
+                    //faz a equacao baseado nas cartas nos slots
+                    if(equation[4] == null){
+                        switch (equation[1])
+                        {
+                            case "0":
+                                Debug.Log(int.Parse(x));
+                                result = int.Parse(x) - int.Parse(y);
+                                resultText.SetText($"{result}");
+                                Debug.Log(result);
+                                break;
+                            case "1":
+                                result = int.Parse(x) + int.Parse(y);
+                                resultText.SetText($"{result}");
+                                Debug.Log(result);
+                                break;
+                            case "2":
+                                result = int.Parse(x) * int.Parse(y);
+                                resultText.SetText($"{result}");
+                                Debug.Log(result);
+                                break;
+                        } 
                     }
                 }
             }           
@@ -107,9 +178,10 @@ public class Slot : MonoBehaviour
             x.transform.position = cardSpawnPoint[materialObjects.IndexOf(x)];
             x.card.cardCreator();
         }
-        equation = new string[3];
+        full = false;
+        equation = new string[5];
+        equation2 = new string[3];
         result = 99;
-        Debug.Log("clear");
         slottedCards.Clear();
     }
     private void CardShuffle()
@@ -119,6 +191,7 @@ public class Slot : MonoBehaviour
             x.card.cardCreator();
         }
     }
+
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.R))
