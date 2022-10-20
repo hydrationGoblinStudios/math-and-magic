@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    public int score = 0;
+    public TextMeshPro scoreText;
     public static List<PlayerController> moveableObjects = new List<PlayerController>();
     public float speed = 5f;
     private Vector3 target;
@@ -23,6 +26,10 @@ public class PlayerController : MonoBehaviour
     public float timer;
     public float timerMax;
     public int range;
+    public bool pause = false;
+    public bool moving = false;
+    public float pointsToBattle;
+    public GameObject hand;
     private void Awake()
     {
         timerMax = timer;
@@ -40,10 +47,23 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if ((pointsToBattle == 12 && score<100) || (pointsToBattle == 13 && score < 100))
+        {
+            pointsToBattle = 0;
+            EngangeInMagicKerfuffles();
+        }
+        if(score == 100 || score == 101)
+        {
+            score = 103;
+            SceneManager.LoadScene(4, LoadSceneMode.Additive);
+        }
+        if (score >= 104)
+        {
+            SceneManager.LoadScene(3);
+        }
+        scoreText.text = "score: " + score;
         timer = gridMaracutaia.timer;
         current = slot.result;
-        oneDown = transform.position;
-        oneDown.y = oneDown.y - 1;
         if (Input.GetMouseButtonDown(1))
         {
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -59,25 +79,46 @@ public class PlayerController : MonoBehaviour
         //move o personagem se o resultado estiver certo
         if (targetValue == current && TargetCoordinate != lastTargetCoordinate && TargetCoordinate[0]<= lastTargetCoordinate[0]+range && TargetCoordinate[0] >= lastTargetCoordinate[0]-range && TargetCoordinate[1] <= lastTargetCoordinate[1] + range && TargetCoordinate[1] >= lastTargetCoordinate[1] - range)
         {
+            pause = false;
             slot.full = false;
             StartCoroutine(MoveToTarget(targetCell));
             StartCoroutine(slot.CardReset());
+            score += TargetCoordinate[1] - lastTargetCoordinate[1];
+            pointsToBattle += TargetCoordinate[1] - lastTargetCoordinate[1];
             slot.closestSnapPoint = slot.snapPoints[0];
             lastTargetCoordinate[0] = TargetCoordinate[0];
             lastTargetCoordinate[1] = TargetCoordinate[1];
+            oneDown = transform.position;
+            oneDown.y = oneDown.y - 1;
         }
-        timer -= Time.deltaTime;
+        if (SceneManager.sceneCount == 2)
+        {
+            hand.SetActive(false);
+            pause = true;
+        }
+        else
+        {
+            hand.SetActive(true);
+            pause = false;
+        }
+        if (pause == false) {
+            timer -= Time.deltaTime;
+        }
         if (timer < 0)
         {
             timer = timerMax;
             player.transform.position = new Vector3(oneDown.x, oneDown.y, 0);
             oneDown = transform.position;
-            oneDown.y = oneDown.y - 1;
+            oneDown.y--;
             lastTargetCoordinate[1] -= 1;
         }
         if(player.transform.position.y <= -6)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene(3);
+        }
+        if (Input.GetKeyDown(KeyCode.B) && Input.GetKeyDown(KeyCode.A) && Input.GetKeyDown(KeyCode.Z))
+        {
+            EngangeInMagicKerfuffles();
         }
     }
     private IEnumerator MoveToTarget(Vector3 x)
@@ -86,4 +127,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds((float)0.3);
         targetValue = 100;
     }   
+    public void EngangeInMagicKerfuffles()
+    {
+        pause = true;
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        }
+    }
 }

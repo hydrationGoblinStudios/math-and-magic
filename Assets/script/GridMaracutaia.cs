@@ -50,12 +50,10 @@ public class GridMaracutaia : MonoBehaviour
     public void Update()
     {
         timerText.text = ""+(int)timer;
-        if (Input.GetKeyDown("y"))
+        if (playerController.pause == false)
         {
-            timer = timerMax;
-            moveDown();
+            timer -= Time.deltaTime;
         }
-        timer -= Time.deltaTime;
         if (timer < 0)
         {
             timer = timerMax;

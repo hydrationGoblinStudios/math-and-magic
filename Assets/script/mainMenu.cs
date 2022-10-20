@@ -5,18 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class mainMenu : MonoBehaviour
 {
-    [SerializeField]
-    private FloatSO Value;
   public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(1);
     }
     public void QuitButton()
     {
         Application.Quit();
     }
-    public void update()
+    public void ToMainMenu()
     {
-        Value.Value = 2;
+        SceneManager.LoadScene(0);
     }
+    public void Update()
+    {
+        if (Input.GetKey(KeyCode.N)& Input.GetKey(KeyCode.I) & Input.GetKey(KeyCode.C) & Input.GetKey(KeyCode.E))
+        {
+            SceneManager.LoadScene(4);
+        }
+    }
+
 }

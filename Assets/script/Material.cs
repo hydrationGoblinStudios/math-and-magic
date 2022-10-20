@@ -12,7 +12,6 @@ public class Material : MonoBehaviour
 
     private void OnMouseDown()
     {
-        cardvalue = card.cardValue;
         held = true;
     }
     public void OnMouseUp()
@@ -23,5 +22,9 @@ public class Material : MonoBehaviour
         }
         held = false;
         dragEndedCallback(this, card);
-    }  
+    }
+    public void Update()
+    {
+        cardvalue = card.cardValue;
+    }
 }

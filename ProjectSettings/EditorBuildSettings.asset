@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MapMovement.unity
     guid: 856885dcbb7aaff4f89200d056923046
+  - enabled: 1
+    path: Assets/Scenes/Battle.unity
+    guid: 7b55f0c05919d574e8efc15503e1523c
+  - enabled: 1
+    path: Assets/Scenes/Game Over.unity
+    guid: f3d46d652e4c8824480b2a082f154b22
+  - enabled: 1
+    path: Assets/Scenes/dragao.unity
+    guid: d4e6d5fa77dabba48a440c61c78a866d
   m_configObjects: {}

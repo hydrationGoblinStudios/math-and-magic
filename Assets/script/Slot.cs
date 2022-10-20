@@ -53,7 +53,15 @@ public class Slot : MonoBehaviour
                         equation2[0] = equation[0];
                         equation2[1] = equation2[1];
                         equation2[2] = equation2[2];
-                        closestSnapPoint = snapPoints[3];
+                        full = true;
+                        if (snapPoints[3] != null)
+                        {
+                            closestSnapPoint = snapPoints[3];
+                        }
+                        else
+                        {
+                            closestSnapPoint = null;
+                        }
                         full = true;
                         break;
                     case 3:
@@ -79,20 +87,16 @@ public class Slot : MonoBehaviour
                             switch (equation[3])
                             {
                                 case "0":
-                                    Debug.Log(int.Parse(x));
                                     result = int.Parse(x) - int.Parse(y) - int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                                 case "1":
                                     result = int.Parse(x) - int.Parse(y) + int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                                 case "2":
                                     result = int.Parse(x) - int.Parse(y) * int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                             }
                             break;
@@ -100,7 +104,6 @@ public class Slot : MonoBehaviour
                             switch (equation[3])
                             {
                                 case "0":
-                                    Debug.Log(int.Parse(x));
                                     result = int.Parse(x) + int.Parse(y) - int.Parse(z);
                                     resultText.SetText($"{result}");
                                     Debug.Log(result);
@@ -108,12 +111,10 @@ public class Slot : MonoBehaviour
                                 case "1":
                                     result = int.Parse(x) + int.Parse(y) + int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                                 case "2":
                                     result = int.Parse(x) + int.Parse(y) * int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                             }
                             break;
@@ -122,19 +123,16 @@ public class Slot : MonoBehaviour
                             {
                                 case "0":
                                     Debug.Log(int.Parse(x));
-                                    result = int.Parse(x) * int.Parse(y) * int.Parse(z);
+                                    result = int.Parse(x) * int.Parse(y) - int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                                 case "1":
-                                    result = int.Parse(x) * int.Parse(y) * int.Parse(z);
+                                    result = int.Parse(x) * int.Parse(y) + int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                                 case "2":
                                     result = int.Parse(x) * int.Parse(y) * int.Parse(z);
                                     resultText.SetText($"{result}");
-                                    Debug.Log(result);
                                     break;
                             }
                             break;
@@ -152,17 +150,14 @@ public class Slot : MonoBehaviour
                                 Debug.Log(int.Parse(x));
                                 result = int.Parse(x) - int.Parse(y);
                                 resultText.SetText($"{result}");
-                                Debug.Log(result);
                                 break;
                             case "1":
                                 result = int.Parse(x) + int.Parse(y);
                                 resultText.SetText($"{result}");
-                                Debug.Log(result);
                                 break;
                             case "2":
                                 result = int.Parse(x) * int.Parse(y);
                                 resultText.SetText($"{result}");
-                                Debug.Log(result);
                                 break;
                         } 
                     }
@@ -184,7 +179,7 @@ public class Slot : MonoBehaviour
         result = 99;
         slottedCards.Clear();
     }
-    private void CardShuffle()
+    public void CardShuffle()
     {
         foreach(Material x in materialObjects)
         {
@@ -196,10 +191,13 @@ public class Slot : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.R))
         {
-            StartCoroutine("CardReset");
-            CardShuffle();
-            CardReset();
-            closestSnapPoint = snapPoints[0];
+            HandShuffle();
         }
+    }
+    public void HandShuffle()
+    {
+        StartCoroutine("CardReset");
+        CardShuffle();
+        closestSnapPoint = snapPoints[0];
     }
 }

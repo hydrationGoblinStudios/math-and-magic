@@ -7,14 +7,12 @@ public class GridRandomizer : MonoBehaviour
 {
     public int[] newLine;
     public int maxTileValue;
-    static int seed;
     public int[,] mapValues = new int[17, 11];
     public int[,] tempMapValues;
     // Start is called before the first frame update
     public static GridRandomizer Instance { get; private set; }
     public void Awake()
     {
-        seed = Random.Range(0, 9999);
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
