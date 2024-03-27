@@ -18,8 +18,8 @@ public class GridMaracutaia : MonoBehaviour
     public void Start()
     {
         mapValues = GridRandomizer.Instance.Randomize();  
-        GridMaker();
-        TileWriter();
+        //GridMaker();
+        //TileWriter();
     }
     public void Awake()
     {

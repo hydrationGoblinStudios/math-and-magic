@@ -64,7 +64,8 @@ public class PlayerController : MonoBehaviour
         scoreText.text = "score: " + score;
         timer = gridMaracutaia.timer;
         current = slot.result;
-        if (Input.GetMouseButtonDown(1))
+        //codigo antigo de movimento(gaslighting)
+        /*if (Input.GetMouseButtonDown(1))
         {
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             target.x = target.x + 0.5f;
@@ -75,21 +76,11 @@ public class PlayerController : MonoBehaviour
             TargetCoordinate[1] = (int)targetCell.y + 5;
             targetValue = mapValues[(int)targetCell.x + 7, (int)targetCell.y + 5];
             Debug.Log("value" + mapValues[(int)targetCell.x+ 7 , (int)targetCell.y+5]);
-        }
+        }*/
         //move o personagem se o resultado estiver certo
         if (targetValue == current && TargetCoordinate != lastTargetCoordinate && TargetCoordinate[0]<= lastTargetCoordinate[0]+range && TargetCoordinate[0] >= lastTargetCoordinate[0]-range && TargetCoordinate[1] <= lastTargetCoordinate[1] + range && TargetCoordinate[1] >= lastTargetCoordinate[1] - range)
         {
-            pause = false;
-            slot.full = false;
-            StartCoroutine(MoveToTarget(targetCell));
-            StartCoroutine(slot.CardReset());
-            score += TargetCoordinate[1] - lastTargetCoordinate[1];
-            pointsToBattle += TargetCoordinate[1] - lastTargetCoordinate[1];
-            slot.closestSnapPoint = slot.snapPoints[0];
-            lastTargetCoordinate[0] = TargetCoordinate[0];
-            lastTargetCoordinate[1] = TargetCoordinate[1];
-            oneDown = transform.position;
-            oneDown.y = oneDown.y - 1;
+            MovePlayer();
         }
         if (SceneManager.sceneCount == 2)
         {
@@ -134,5 +125,29 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(2, LoadSceneMode.Additive);
         }
+    }
+    public void MovePlayer()
+    {
+        pause = false;
+        slot.full = false;
+        StartCoroutine(MoveToTarget(targetCell));
+        StartCoroutine(slot.CardReset());
+        score += TargetCoordinate[1] - lastTargetCoordinate[1];
+        pointsToBattle += TargetCoordinate[1] - lastTargetCoordinate[1];
+        slot.closestSnapPoint = slot.snapPoints[0];
+        lastTargetCoordinate[0] = TargetCoordinate[0];
+        lastTargetCoordinate[1] = TargetCoordinate[1];
+        oneDown = transform.position;
+        oneDown.y = oneDown.y - 1;
+    }
+    public void CheckForMovement( float value, Vector3 TilePosition )
+    {
+        if(value == current)
+        {
+            targetCell = TilePosition;
+            MovePlayer();
+            Debug.Log(" finge que andou ");
+        }
+        else { Debug.Log("n?o andou"); }
     }
 }
