@@ -232,10 +232,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
-  collider: {fileID: 289891519945971871}
+  collider2d: {fileID: 0}
   valor: 0
   x: 0
   y: 0
+  valorTexto: {fileID: 0}
 --- !u!1 &5865318412543918674
 GameObject:
   m_ObjectHideFlags: 0
