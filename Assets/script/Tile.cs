@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour
     public PlayerController playerController;
     public Collider2D collider;
     public float valor;
+    public int x, y;
     void Start()
     {
        playerController = FindObjectOfType<PlayerController>();
@@ -14,6 +15,6 @@ public class Tile : MonoBehaviour
     void OnMouseDown()
     {
         Debug.Log("butao clicadu");
-        playerController.CheckForMovement(valor,gameObject.transform.position);
+        playerController.CheckForMovement(valor,gameObject.transform.position,x,y);
     }
 }

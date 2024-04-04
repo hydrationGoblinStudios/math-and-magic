@@ -76,6 +76,5 @@ public class GridMaracutaia : MonoBehaviour
         {
             mapValues[x, 10] = tempLine[x];
         }
-        TileWriter();
     }
 }

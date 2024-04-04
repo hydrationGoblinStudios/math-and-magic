@@ -10,9 +10,10 @@ public class PlayerController : MonoBehaviour
     public TextMeshPro scoreText;
     public static List<PlayerController> moveableObjects = new List<PlayerController>();
     public float speed = 5f;
-    private Vector3 target;
+    private Vector2 target;
+    public int[] currentCoordinate;
     public GridLayout grid;
-    public Vector3 targetCell;
+    public Vector2 targetCell;
     public GridMaracutaia gridMaracutaia;
     public int[,] mapValues;
     public GridRandomizer gridRandomizer;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public int targetValue;
     public int[] TargetCoordinate;
     public int[] lastTargetCoordinate;
-    public Vector3 oneDown;
+    public Vector2 oneDown;
     public GameObject player;
     public float timer;
     public float timerMax;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         timerMax = timer;
         TargetCoordinate = new int[2] { 0, 0 };
-        lastTargetCoordinate = new int[2] { 7, 5 };
+        lastTargetCoordinate = new int[2] { 8, 5 };
     }
     void Start()
     {
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
         //move o personagem se o resultado estiver certo
         if (targetValue == current && TargetCoordinate != lastTargetCoordinate && TargetCoordinate[0]<= lastTargetCoordinate[0]+range && TargetCoordinate[0] >= lastTargetCoordinate[0]-range && TargetCoordinate[1] <= lastTargetCoordinate[1] + range && TargetCoordinate[1] >= lastTargetCoordinate[1] - range)
         {
-            MovePlayer();
+            //MovePlayer();
         }
         if (SceneManager.sceneCount == 2)
         {
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour
         if (timer < 0)
         {
             timer = timerMax;
-            player.transform.position = new Vector3(oneDown.x, oneDown.y, 0);
+            player.transform.position = new Vector2(oneDown.x, oneDown.y);
             oneDown = transform.position;
             oneDown.y--;
             lastTargetCoordinate[1] -= 1;
@@ -112,12 +113,11 @@ public class PlayerController : MonoBehaviour
             EngangeInMagicKerfuffles();
         }
     }
-    private IEnumerator MoveToTarget(Vector3 x)
+    private IEnumerator MoveToTarget(Vector2 x)
     {
-        transform.position = Vector3.MoveTowards(transform.position, x, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, x, 909090909090);
         yield return new WaitForSeconds((float)0.3);
-        targetValue = 100;
-    }   
+    }
     public void EngangeInMagicKerfuffles()
     {
         pause = true;
@@ -135,18 +135,21 @@ public class PlayerController : MonoBehaviour
         score += TargetCoordinate[1] - lastTargetCoordinate[1];
         pointsToBattle += TargetCoordinate[1] - lastTargetCoordinate[1];
         slot.closestSnapPoint = slot.snapPoints[0];
+        TargetCoordinate[0] = (int)targetCell.x + 7;
+        TargetCoordinate[1] = (int)targetCell.y + 5;
         lastTargetCoordinate[0] = TargetCoordinate[0];
         lastTargetCoordinate[1] = TargetCoordinate[1];
         oneDown = transform.position;
-        oneDown.y = oneDown.y - 1;
+        oneDown.y--;
     }
-    public void CheckForMovement( float value, Vector3 TilePosition )
+    public void CheckForMovement( float value, Vector2 TilePosition, int x, int y)
     {
         if(value == current)
         {
             targetCell = TilePosition;
             MovePlayer();
-            Debug.Log(" finge que andou ");
+            currentCoordinate[0] = x;currentCoordinate[1] = y;
+            Debug.Log("finge que andou ");
         }
         else { Debug.Log("n?o andou"); }
     }

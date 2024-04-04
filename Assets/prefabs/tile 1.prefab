@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8529818279736393559}
   - component: {fileID: 2321719638049433629}
   - component: {fileID: 4894878887575891399}
-  - component: {fileID: 7161822565743953692}
   - component: {fileID: 289891519945971871}
   - component: {fileID: -5553158542125429394}
   m_Layer: 0
@@ -103,7 +102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 12
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f44bca492157af4e9e78592de9783af, type: 2}
   m_sharedMaterial: {fileID: 5043598580235758366, guid: 8f44bca492157af4e9e78592de9783af, type: 2}
@@ -175,14 +174,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2321719638049433629}
   m_maskType: 0
---- !u!33 &7161822565743953692
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 634826002157318837}
-  m_Mesh: {fileID: 0}
 --- !u!61 &289891519945971871
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -242,6 +233,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
   collider: {fileID: 289891519945971871}
+  valor: 0
+  x: 0
+  y: 0
 --- !u!1 &5865318412543918674
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1235596352360241421}
   - component: {fileID: 8919863303081302739}
+  - component: {fileID: 8949785820321128445}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -330,3 +325,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &8949785820321128445
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865318412543918674}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
+  m_SortAtRoot: 0
