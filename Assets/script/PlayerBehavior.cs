@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using static Item;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -10,13 +11,21 @@ public class PlayerBehavior : MonoBehaviour
     public SpriteRenderer[] hearts;
     public Sprite FullHeart;
     public Sprite EmptyHeart;
-    // Start is called before the first frame update
+    public List<Itemlist> items = new List<Itemlist>();
+
+
+    void Start()
+    {
+        AmuletoCurativo item = new AmuletoCurativo();
+        items.Add(new Itemlist(item, item.GiveName(), 1));
+        StartCoroutine(CallItemUpdate());
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         health -= 1;
         for (int i = 0; i < hearts.Length; i++)
         {
-            if(health > i)
+            if (health > i)
             {
                 hearts[i].sprite = FullHeart;
             }
@@ -27,5 +36,18 @@ public class PlayerBehavior : MonoBehaviour
         {
             SceneManager.LoadScene(3);
         }
+    }
+    void Update()
+    {
+
+    }
+    IEnumerator CallItemUpdate()
+    {
+        foreach (Itemlist i in items)
+        {
+            i.item.Update(this, i.stacks);
+        }
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(CallItemUpdate());
     }
 }

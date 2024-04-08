@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
         target = transform.position;
         oneDown = transform.position;
         oneDown.y = oneDown.y - 1;
+        
     }
     void Update()
     {
