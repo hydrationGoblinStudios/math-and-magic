@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 public class GridMaracutaia : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class GridMaracutaia : MonoBehaviour
     public float timerMax;
     public PlayerController playerController;
     public TextMeshPro timerText;
+    public List<GameObject> TileList = new List<GameObject>();
+    GameObject target;
     public void Start()
     {
         mapValues = GridRandomizer.Instance.Randomize();  
@@ -57,24 +60,42 @@ public class GridMaracutaia : MonoBehaviour
         if (timer < 0)
         {
             timer = timerMax;
-            moveDown();
+            MoveDown();
         }
     }
-    public void moveDown()
+    public void MoveDown()
     {
-        tempMapValues = mapValues;
-        tempLine = gridRandomizer.lineRandomizer();
-        
-        for (int x = 0; x <= 16; x++)
+        if (playerController.currentCoordinate[1] == 1)
         {
-            for (int y = 0; y <= 9; y++)
-            {
-               mapValues[x,y] = tempMapValues[x,y+1];
-            }
+            SceneManager.LoadScene("Game Over");
         }
-        for (int x = 0; x <= 16; x++)
+        //pega a cordenada da tile abaixo por ID e move para ela
+        target = null;
+        for (int i = 0; i < TileList.Count; i++)
         {
-            mapValues[x, 10] = tempLine[x];
+            if (TileList[i].GetComponent<Tile>().x == playerController.currentCoordinate[0] &&
+                TileList[i].GetComponent<Tile>().y == playerController.currentCoordinate[1] - 1)
+            {
+                Tile tile = TileList[i].GetComponent<Tile>();
+                playerController.CheckForMovement(playerController.current, tile.transform.position, tile.x, tile.y);
+                break;
+            }
         }
     }
 }
+//codigo antigo de andar a tela pra baixo
+/*
+tempMapValues = mapValues;
+tempLine = gridRandomizer.lineRandomizer();
+
+for (int x = 0; x <= 16; x++)
+{
+    for (int y = 0; y <= 9; y++)
+    {
+       mapValues[x,y] = tempMapValues[x,y+1];
+    }
+}
+for (int x = 0; x <= 16; x++)
+{
+    mapValues[x, 10] = tempLine[x];
+}*/
