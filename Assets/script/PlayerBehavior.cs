@@ -7,13 +7,15 @@ using static Item;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public int maxhealth;
     public int health;
+    public int Damage;
     public SpriteRenderer[] hearts;
     public Sprite FullHeart;
     public Sprite EmptyHeart;
     public List<Itemlist> items = new List<Itemlist>();
 
-
+    //lembrar de tirar o item no start depois
     void Start()
     {
         AmuletoCurativo item = new AmuletoCurativo();
@@ -39,7 +41,10 @@ public class PlayerBehavior : MonoBehaviour
     }
     void Update()
     {
-
+        if (health > maxhealth)
+        {
+            health = maxhealth;
+        }
     }
     IEnumerator CallItemUpdate()
     {

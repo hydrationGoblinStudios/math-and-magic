@@ -14,6 +14,7 @@ public class EnemyBehavior : MonoBehaviour
     public TextMeshPro textMeshPro;
     public int health;
     public GameObject wipe;
+    public PlayerBehavior playerBehavior;
     private void Awake()
     {
         timer = timerMax;
@@ -24,7 +25,7 @@ public class EnemyBehavior : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        health -= 1;
+        health -= playerBehavior.Damage;
         textMeshPro.text = "" + health;
     }
     public void Update()
