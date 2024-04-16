@@ -10,11 +10,14 @@ public class Tile : MonoBehaviour
     public float valor;
     public int x, y;
     public TextMeshPro valorTexto;
+    public GridMaracutaia gridMaracutaia;
     void Start()
     {
        playerController = FindObjectOfType<PlayerController>();
        valorTexto = GetComponent<TextMeshPro>();
         RandomizeSelfValue();
+        gridMaracutaia = FindAnyObjectByType<GridMaracutaia>();
+        gridMaracutaia.TileList.Add(gameObject);
     }
     void OnMouseDown()
     {
