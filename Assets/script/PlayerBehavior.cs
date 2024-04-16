@@ -21,9 +21,11 @@ public class PlayerBehavior : MonoBehaviour
         AmuletoCurativo item = new AmuletoCurativo();
         items.Add(new Itemlist(item, item.GiveName(), 1));
         StartCoroutine(CallItemUpdate());
+        Damage = 1;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //mudar esse codigo
         health -= 1;
         for (int i = 0; i < hearts.Length; i++)
         {

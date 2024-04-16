@@ -21,6 +21,7 @@ public class EnemyBehavior : MonoBehaviour
     }
     public void Start()
     {
+        playerBehavior = FindObjectOfType<PlayerBehavior>();
         textMeshPro.text = "" + health;
     }
     private void OnCollisionEnter2D(Collision2D collision)
