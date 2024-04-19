@@ -135,6 +135,16 @@ public class Slot : MonoBehaviour
                                     resultText.SetText($"{result}");
                                     break;
                             }
+                            if (result / 2 == 0)
+                            {
+
+
+
+                            }
+                            if (result / 2 == 1)
+                            {
+
+                            }
                             break;
                     }
                 }
