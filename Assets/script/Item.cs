@@ -5,12 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Item
 {
+    //nome do item
     public abstract string GiveName();
+    //item ativa passivamente a cada tick
     public virtual void Update(PlayerBehavior player, int stacks)
     {
 
     }
-
+    //Item q ativa na equação par
     public virtual void EquacaoPar(PlayerBehavior player,EnemyBehavior enemy, int stacks)
     {
 
