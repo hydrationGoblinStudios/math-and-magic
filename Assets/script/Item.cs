@@ -11,6 +11,10 @@ public abstract class Item
 
     }
 
+    public virtual void EquacaoPar(PlayerBehavior player,EnemyBehavior enemy, int stacks)
+    {
+
+    }
 
 
     public class AmuletoCurativo : Item
@@ -22,6 +26,18 @@ public abstract class Item
         public override void Update(PlayerBehavior player, int stacks)
         {
             player.health += 1 + (1 * stacks);
+        }
+    }
+
+    public class ManoplaPar : Item
+    {
+        public override string GiveName()
+        {
+            return "Manopla Par";
+        }
+        public override void EquacaoPar(PlayerBehavior player, EnemyBehavior enemy, int stacks)
+        {
+            enemy.health -= 2 + (2 * stacks);
         }
     }
 }

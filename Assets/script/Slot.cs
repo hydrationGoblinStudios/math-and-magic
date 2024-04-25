@@ -20,9 +20,12 @@ public class Slot : MonoBehaviour
     public TextMeshPro resultText;
     public Transform closestSnapPoint;
     public bool full = false;
+    public PlayerBehavior player;
+    public EnemyBehavior enemy;
 
     private void Start()
     {
+        enemy = FindObjectOfType<EnemyBehavior>();
         closestSnapPoint = snapPoints[0];
         foreach (Material material in materialObjects)
         {
@@ -135,15 +138,16 @@ public class Slot : MonoBehaviour
                                     resultText.SetText($"{result}");
                                     break;
                             }
-                            if (result / 2 == 0)
+                            if (result % 2 == 0)
                             {
-
+                                Debug.Log("numero par");
+                                player.CallItemPar(enemy);
 
 
                             }
-                            if (result / 2 == 1)
+                            if (result % 2 == 1)
                             {
-
+                                
                             }
                             break;
                     }

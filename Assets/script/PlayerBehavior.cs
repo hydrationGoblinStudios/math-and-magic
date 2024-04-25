@@ -18,8 +18,8 @@ public class PlayerBehavior : MonoBehaviour
     //lembrar de tirar o item no start depois
     void Start()
     {
-        AmuletoCurativo item = new AmuletoCurativo();
-        items.Add(new Itemlist(item, item.GiveName(), 1));
+        ManoplaPar item = new ManoplaPar();
+        items.Add(new Itemlist(item, item.GiveName(), 2));
         StartCoroutine(CallItemUpdate());
         Damage = 1;
     }
@@ -57,4 +57,13 @@ public class PlayerBehavior : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartCoroutine(CallItemUpdate());
     }
+
+    public void  CallItemPar(EnemyBehavior enemy)
+    {
+        foreach (Itemlist i in items)
+        {
+            i.item.EquacaoPar(this,enemy, i.stacks);
+        }
+    }
+
 }
